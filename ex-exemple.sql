@@ -198,3 +198,11 @@ Changer le nom du département 45 en 'Logistique';
 Update dept
 set nom = 'Logistique'
 WHERE nodept = 45;
+
+
+Suprime le dernier employe;
+
+DELETE FROM employe
+WHERE 'Last' (select noemp as 'Last'
+              from employe
+              order by noemp DESC);
