@@ -1,2 +1,2 @@
 # Exercice-SQL-base-example
-exercice
+Exercice SQL base example
