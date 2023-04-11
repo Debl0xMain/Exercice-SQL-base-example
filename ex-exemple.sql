@@ -167,12 +167,7 @@ SELECT SUBSTR(nom, 3,3)
 FROM employe;
 
 30. Afficher le nom et le rang de la lettre « r » dans le nom des
-employés.;
-
-
-
-31. Afficher le nom, le nom en majuscule et le nom en minuscule de
-lemployé dont le nom est Vrante.;
+employés. Vrante.;
 
  select UPPER(nom) as 'nom',lower(prenom) as 'prenom'
  from employe
@@ -182,3 +177,24 @@ lemployé dont le nom est Vrante.;
 
 SELECT nom , LENGTH(nom) as 'Nbr de caractere'
 FROM employe
+
+
+
+Ajouter trois employés dans la base de données avec les données de votre choix.;
+
+INSERT INTO  employe  ( noemp ,  nom ,  prenom ,  dateemb ,  nosup ,  titre ,  nodep ,  salaire ,  tauxcom ) VALUES (51, 'Bob', 'lebricoleur', '100', 5, 'président', '50', 50000, NULL),
+                                                                                                                    (52, 'serveur', 'agathe', '50000415', '1', 'dir.distrib', '41', 35000, NULL) ,
+                                                                                                                    (53, 'zedoux', 'rachid', '80000505', '1', 'dir.vente', '31', 34000, NULL);
+
+Ajouter un département;
+INSERT INTO  dept  ( nodept ,  nom ,  noregion ) VALUES ('10', 'PoleVideo', '80');
+Augmenter de 10% le salaire de l employe 17;
+Update employe
+set noemp = noemp * 1.1
+WHERE noemp = 17;
+
+Changer le nom du département 45 en 'Logistique';
+
+Update dept
+set nom = 'Logistique'
+WHERE nodept = 45;
