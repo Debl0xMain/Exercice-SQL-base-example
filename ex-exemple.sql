@@ -242,7 +242,7 @@ salariés et l écart entre les deux. ;
 
 SELECT MAX(salaire) AS "slrmax", 
     MIN(salaire) AS "slrmin",
-    'slrmax' - 'slr_min' 
+    'slrmax' - 'slrmin' 
 AS diff 
 FROM employe;
 
