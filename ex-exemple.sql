@@ -206,3 +206,96 @@ DELETE FROM employe
 WHERE 'Last' (select noemp as 'Last'
               from employe
               order by noemp DESC);
+              
+              
+              
+----------------------Phase2-----------------------------------
+
+Rechercher le prénom des employés et le numéro de la région de leur
+département. ;
+
+1. Calculer le nombre d employés de chaque titre;
+
+SELECT COUNT(nom) AS 'nbr_', titre 
+FROM employe 
+GROUP BY titre;
+2. Calculer la moyenne des salaires et leur somme, par région.;
+
+SELECT AVG(salaire) AS 'mynslr', SUM(salaire) AS 'salaire', nodep 
+FROM employe 
+GROUP BY nodep;
+
+3. Afficher les numéros des départements ayant au moins 3 employés;
+
+SELECT COUNT(nom) AS 'nmbr', nodep
+FROM employ 
+GROUP BY nodep 
+HAVING COUNT(*) > 3;
+
+4. Afficher les lettres qui sont l'initiale d'au moins trois employés.;
+
+SELECT COUNT(nom, 1) AS 'ltr', COUNT(*) AS 'count' FROM employe 
+GROUP BY ltr 
+HAVING COUNT(*) > 3;
+5. Rechercher le salaire maximum et le salaire minimum parmi tous les
+salariés et l écart entre les deux. ;
+
+SELECT MAX(salaire) AS "slrmax", 
+    MIN(salaire) AS "slrmin",
+    'slrmax' - 'slr_min' 
+AS diff 
+FROM employe;
+
+6. Rechercher le nombre de titres différents. ;
+
+SELECT COUNT(DISTINCT titre) as'Titre'
+FROM employe;
+
+7. Pour chaque titre, compter le nombre d employés possédant ce titre.;
+
+SELECT COUNT(nom) as 'nom', titre 
+FROM employe 
+GROUP BY titre;
+
+8. Pour chaque nom de département, afficher le nom du département et
+le nombre d employés;
+
+SELECT COUNT(employe.nom) as 'nom employe', dept.nom 
+FROM employe 
+JOIN dept ON employe.nodep = dept.nodept 
+GROUP BY dept.nom ASC;
+
+9. Rechercher les titres et la moyenne des salaires par titre dont la
+moyenne est supérieure à la moyenne des salaires des Représentants. 
+
+SELECT AVG(salaire) AS 'slr', titre 
+FROM employe 
+GROUP BY titre 
+HAVING slr > (
+                SELECT AVG(salaire) AS moy_salaire 
+                FROM employe 
+                WHERE titre = 'rprsent');
+
+10.Rechercher le nombre de salaires renseignés et le nombre de taux de
+commission renseignés. 
+
+SELECT COUNT(tauxcom) , COUNT(salaire)
+FROM employe;
+
+Rechercher le numéro de département, le nom du département, le
+nom des employés, en affichant aussi les départements dans lesquels
+il n y a personne, classés par numéro de département ;
+
+Rechercher le nom et le salaire des employés qui gagnent plus que
+leur patron, et le nom et le salaire de leur patron. ;
+
+Rechercher le numéro du département, le nom du département, le
+nom des employés classés par numéro de département (renommer les
+tables utilisées).;
+
+Rechercher le nom des employés du département Distribution. ;
+Rechercher le prénom des employés et le numéro de la région de leur
+département.;
+
+
+
