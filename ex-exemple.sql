@@ -211,9 +211,6 @@ WHERE 'Last' (select noemp as 'Last'
               
 ----------------------Phase2-----------------------------------
 
-Rechercher le prénom des employés et le numéro de la région de leur
-département. ;
-
 1. Calculer le nombre d employés de chaque titre;
 
 SELECT COUNT(nom) AS 'nbr_', titre 
@@ -234,7 +231,8 @@ HAVING COUNT(*) > 3;
 
 4. Afficher les lettres qui sont l'initiale d'au moins trois employés.;
 
-SELECT COUNT(nom, 1) AS 'ltr', COUNT(*) AS 'count' FROM employe 
+SELECT COUNT(nom, 1) AS 'ltr', COUNT(*) AS 'count'
+FROM employe 
 GROUP BY ltr 
 HAVING COUNT(*) > 3;
 5. Rechercher le salaire maximum et le salaire minimum parmi tous les
@@ -262,7 +260,8 @@ le nombre d employés;
 
 SELECT COUNT(employe.nom) as 'nom employe', dept.nom 
 FROM employe 
-JOIN dept ON employe.nodep = dept.nodept 
+JOIN dept 
+ON employe.nodep = dept.nodept 
 GROUP BY dept.nom ASC;
 
 9. Rechercher les titres et la moyenne des salaires par titre dont la
@@ -285,6 +284,12 @@ FROM employe;
 Rechercher le numéro de département, le nom du département, le
 nom des employés, en affichant aussi les départements dans lesquels
 il n y a personne, classés par numéro de département ;
+
+SELECT employe.nodep , employe.nom , dept.nom
+FROM employe
+JOIN dept 
+ON employe.nodep = dept.nodept 
+order by employe.nodep;
 
 Rechercher le nom et le salaire des employés qui gagnent plus que
 leur patron, et le nom et le salaire de leur patron. ;
