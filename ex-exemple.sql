@@ -265,13 +265,13 @@ ON employe.nodep = dept.nodept
 GROUP BY dept.nom ASC;
 
 9. Rechercher les titres et la moyenne des salaires par titre dont la
-moyenne est supérieure à la moyenne des salaires des Représentants. 
+moyenne est supérieure à la moyenne des salaires des Représentants. ;
 
 SELECT AVG(salaire) AS 'slr', titre 
 FROM employe 
 GROUP BY titre 
 HAVING slr > (
-                SELECT AVG(salaire) AS moy_salaire 
+                SELECT AVG(salaire) AS 'rprsent' 
                 FROM employe 
                 WHERE titre = 'rprsent');
 
@@ -290,9 +290,6 @@ FROM employe
 JOIN dept 
 ON employe.nodep = dept.nodept 
 order by employe.nodep;
-
-Rechercher le nom et le salaire des employés qui gagnent plus que
-leur patron, et le nom et le salaire de leur patron. ;
 
 Rechercher le numéro du département, le nom du département, le
 nom des employés classés par numéro de département (renommer les
@@ -319,4 +316,18 @@ SELECT employe.nodep as "numero Departement" , employe.prenom as 'Salarie'
 FROM employe
 JOIN dept 
 ON employe.nodep = dept.nodept ;
+
+Rechercher le nom et le salaire des employés qui gagnent plus que
+leur patron, et le nom et le salaire de leur patron. ;
+
+
+select table1.nom,table1.salaire,table1.titre,table1.nosup,
+        table2.noemp,table2.salaire,table2.nom,table2.titre
+FROM employe table1,employe table2
+WHERE table1.nosup = table2.noemp
+having table1.salaire > table2.salaire
+
+            ;
+
+
 
