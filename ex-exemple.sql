@@ -298,9 +298,25 @@ Rechercher le numéro du département, le nom du département, le
 nom des employés classés par numéro de département (renommer les
 tables utilisées).;
 
+SELECT employe.nodep as "numero Departement" , employe.nom as 'Salarie' , dept.nom as "departement"
+FROM employe
+JOIN dept 
+ON employe.nodep = dept.nodept 
+order by employe.nodep;
+
 Rechercher le nom des employés du département Distribution. ;
+
+SELECT employe.nodep as "numero Departement" , employe.nom as 'Salarie' , dept.nom as "departement"
+FROM employe
+JOIN dept 
+ON employe.nodep = dept.nodept 
+WHERE employe.nodep = 41 ;
+
 Rechercher le prénom des employés et le numéro de la région de leur
 département.;
 
-
+SELECT employe.nodep as "numero Departement" , employe.prenom as 'Salarie'
+FROM employe
+JOIN dept 
+ON employe.nodep = dept.nodept ;
 
