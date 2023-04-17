@@ -29,30 +29,16 @@ SELECT nom , noemp , nodep , titre
 FROM employe
 WHERE titre = 'secretaire';
 
-7. Afficher le nom et le numéro de département dont le numéro de
-département est supérieur à 40;
+
+7. Afficher le nom et le numéro de département dont le numéro de département est supérieur à 40;
 
 SELECT nom , noemp , nodep
 FROM employe
-WHERE nodep >= 40 ;
+WHERE nodep > 40 ;
 
-9. Afficher le nom, le salaire et le numéro du département des employés
-dont le titre est « Représentant », le numéro de département est 35 et
-le salaire est supérieur à 20000. ;
-
-SELECT nom , noemp , nodep , titre , salaire
-FROM employe
-WHERE titre = "représentant"
-AND nodep = 35
-AND salaire > 20000
-
-10.Afficher le nom, le titre et le salaire des employés dont le titre est
-« Représentant » ou dont le titre est « Président ».;
-
-SELECT nom , titre , salaire 
-FROM employe
-WHERE titre = "representant"
-or titre = "president";
+<!-- il faut mettre '>40' et non pas '>=40' -->
+-- corrige
+/////////////////
 
 12.Afficher le nom, le titre, le numéro de département, le salaire des
 employés dont le titre est Représentant, ou dont le titre est Secrétaire
@@ -64,34 +50,15 @@ WHERE titre = "representant"
 AND nodep = 34
 or titre = "secretaire"
 AND nodep = 34;
-
-13.Afficher le nom, et le salaire des employés dont le salaire est compris
-entre 20000 et 30000.;
-
-SELECT nom , salaire
+ 
+<!-- tu aurais pu l'écrire comme ça pour éviter d'écrire deux fois 'AND nodept=34' -->
+ 
+SELECT nom , titre , salaire , nodep 
 FROM employe
-WHERE salaire >= 20000
-and salaire <= 30000;
+WHERE (titre = "representant" or titre = "secretaire")
+AND nodep = 34;
 
-15.Afficher le nom des employés commençant par la lettre « H ». ;
-
-SELECT nom 
-FROM employe
-WHERE nom LIKE 'H%';
-
-16.Afficher le nom des employés se terminant par la lettre « n ». ;
-
-SELECT nom 
-FROM employe
-WHERE nom LIKE '%n';
-
-17.Afficher le nom des employés contenant la lettre « u » en 3ème
-position. ;
-
-SELECT nom 
-FROM employe
-WHERE nom LIKE '__u%';
-
+///////////////////////////
 18.Afficher le salaire et le nom des employés du service 41 classés par
 salaire croissant. ;
 
@@ -100,19 +67,28 @@ FROM employe
 where nodep = 41
 order by salaire DESC;
 
+<!-- salaire croissant 'ASC' -->
+
+///////////////
 19.Afficher le salaire et le nom des employés du service 41 classés par
 salaire décroissant;
+
 select nom , salaire , nodep 
 FROM employe
 where nodep = 41
 order by salaire ASC ;
 
+<!-- salaire décroissant 'DESC' -->
+
+///////////////
 20.Afficher le titre, le salaire et le nom des employés classés par titre
 croissant et par salaire décroissant.;
 
 select nom , salaire , nodep , titre
 FROM employe
-order by salaire ASC , titre DESC
+order by salaire ASC , titre DESC;
+
+<!-- pareil, salaire décroissant ('DESC'), titre croissant ('ASC') -->
 
 21.Afficher le taux de commission, le salaire et le nom des employés
 classés par taux de commission croissante. ;
@@ -121,91 +97,100 @@ select nom , salaire , tauxcom , titre
 FROM employe
 order by tauxcom DESC;
 
-22.Afficher le nom, le salaire, le taux de commission et le titre des
+<!--  tauxcom ASC (croissant) -->
+
+22.Afficher le nom, le salaire, le taux de commission et le titre desAjouter un département;
+INSERT INTO  dept  ( nodept ,  nom ,  noregion ) VALUES ('10', 'PoleVideo', '80');
 employés dont le taux de commission n est pas renseigné.  ;
 
 select nom , salaire , tauxcom , titre
 FROM employe
 where tauxcom is NULL
-order by tauxcom DESC;
+order by tauxcom DESC; 
 
+<!-- il n'y a pas de tri dans la consigne ('ORDER BY') -->
+
+/////////////////////////////
 24.Afficher le nom, le salaire, le taux de commission, le titre des
 employés dont le taux de commission est inférieur à 15.;
 
 select nom , salaire , tauxcom , titre
 FROM employe
-where tauxcom <= 15
+where tauxcom < 15
 order by tauxcom DESC;
 
-25. Afficher le nom, le salaire, le taux de commission, le titre des
-employés dont le taux de commission est supérieur à 15. ;
+<!-- inférier ('<') et non pas 'inférieur OU égal ('<=') et sans 'ORDER BY' -->
+
+25. Afficher le nom, le salaire, le taux de commission, le titre des employés dont le taux de commission est supérieur à 15. ;
 
 select nom , salaire , tauxcom , titre
 FROM employe
-where tauxcom >= 15
+where tauxcom > 15
 order by tauxcom DESC;
 
-Y.
-26.Afficher le nom, le salaire, le taux de commission et la commission des
-employés dont le taux de commission n est pas nul. (la commission
-est calculée en multipliant le salaire par le taux de commission);
+<!-- supérieur à 15 : '>15' et non pas supérieur OU égal ('>='); sans 'ORDER BY' -->
+
+26.Afficher le nom, le salaire, le taux de commission et la commission des employés dont le taux de commission n est pas nul. (la commission est calculée en multipliant le salaire par le taux de commission);
 
 select nom , salaire , tauxcom , titre
 FROM employe
 where tauxcom is NOT NULL
 order by tauxcom DESC;
 
-28. Afficher le nom et le prénom (concaténés) des employés. Renommer
-les colonnes;
-select CONCAT( nom,' ',prenom) as "Employe"
+<!-- On demande non pas le 'titre', mais la 'commission', calculée en multipliant le salaire par le taux de commission); Et il n'y a pas de 'ORDER BY' 
+select nom , salaire , tauxcom , (tauxcom * salaire) as commission
 FROM employe
-where tauxcom is NOT NULL
-order by tauxcom DESC;
+where tauxcom is NOT NULL;
+
+-->
+
+<!-- L'exo 27 tu ne l'as pas -->
 
 29. Afficher les 5 premières lettres du nom des employés.;
 SELECT SUBSTR(nom, 3,3)
 FROM employe;
 
-30. Afficher le nom et le rang de la lettre « r » dans le nom des
-employés. Vrante.;
+<!-- Les 5 premières lettres, c'est-à-dire  :
+;
+SELECT SUBSTR(nom, 1,5)
+FROM employe;
 
- select UPPER(nom) as 'nom',lower(prenom) as 'prenom'
- from employe
- WHERE nom = 'Vrante';
-
-32. Afficher le nom et le nombre de caractères du nom des employés. ;
-
-SELECT nom , LENGTH(nom) as 'Nbr de caractere'
-FROM employe
-
-
+//////////////////
 
 Ajouter trois employés dans la base de données avec les données de votre choix.;
 
-INSERT INTO  employe  ( noemp ,  nom ,  prenom ,  dateemb ,  nosup ,  titre ,  nodep ,  salaire ,  tauxcom ) VALUES (51, 'Bob', 'lebricoleur', '100', 5, 'président', '50', 50000, NULL),
-                                                                                                                    (52, 'serveur', 'agathe', '50000415', '1', 'dir.distrib', '41', 35000, NULL) ,
-                                                                                                                    (53, 'zedoux', 'rachid', '80000505', '1', 'dir.vente', '31', 34000, NULL);
+INSERT INTO  employe  ( noemp ,  nom ,  prenom ,  dateemb ,  nosup ,  titre ,  nodep ,  salaire ,  tauxcom ) 
+VALUES (51, 'Bob', 'lebricoleur', '100', 5, 'président', '50', 50000, NULL),
+        (52, 'serveur', 'agathe', '50000415', '1', 'dir.distrib', '41', 35000, NULL) ,
+        (53, 'zedoux', 'rachid', '80000505', '1', 'dir.vente', '31', 34000, NULL);
+        
+<!-- le format de date n'est pas bon pour le champ "dateemb" qui veut dire 'date embauche' 
+Remplace par: 
+	INSERT INTO  employe  ( noemp ,  nom ,  prenom ,  dateemb ,  nosup ,  titre ,  nodep ,  salaire ,  tauxcom ) 
+	VALUES (51, 'Bob', 'lebricoleur', '2023-10-23', 5, 'président', '50', 50000, NULL),
+        	(52, 'serveur', 'agathe', '2023-10-23', '1', 'dir.distrib', '41', 35000, NULL) ,
+        	(53, 'zedoux', 'rachid', '2023-10-23', '1', 'dir.vente', '31', 34000, NULL);
+
+
+--> 
 
 Ajouter un département;
 INSERT INTO  dept  ( nodept ,  nom ,  noregion ) VALUES ('10', 'PoleVideo', '80');
+
+<!-- l'id 10 existe déjà, avec ces données tu auras une erreur t'indiquant une clé dupliquée pour l'id 10        avec php j'aurai fait une requete pour recupere la valeur la plus hate au niveau de la clef et j'aurazi rajoute +1
+    
 Augmenter de 10% le salaire de l employe 17;
+
 Update employe
-set noemp = noemp * 1.1
+set salaire = salaire * 1.1
 WHERE noemp = 17;
 
-Changer le nom du département 45 en 'Logistique';
 
-Update dept
-set nom = 'Logistique'
-WHERE nodept = 45;
+<!-- c'est le salaire que l'on doit augmenter, pas le numéro du salarie ('noemp' est le numéro de l employé) -->
+;
 
 
-Suprime le dernier employe;
 
-DELETE FROM employe
-WHERE 'Last' (select noemp as 'Last'
-              from employe
-              order by noemp DESC);
               
               
               
@@ -239,7 +224,7 @@ HAVING COUNT(*) > 3;
 salariés et l écart entre les deux. ;
 
 SELECT MAX(salaire) AS "slrmax", 
-    MIN(salaire) AS "slrmin",
+     MIN(salaire) AS "slrmin",
     'slrmax' - 'slrmin' 
 AS diff 
 FROM employe;
@@ -258,27 +243,34 @@ GROUP BY titre;
 8. Pour chaque nom de département, afficher le nom du département et
 le nombre d employés;
 
-SELECT COUNT(employe.nom) as 'nom employe', dept.nom 
+SELECT DISTINCT dept.nom , count(employe.nom)
 FROM employe 
 JOIN dept 
-ON employe.nodep = dept.nodept 
-GROUP BY dept.nom ASC;
+ON employe.nodep = dept.nodept
+GROUP BY dept.nom
+
+;
+
 
 9. Rechercher les titres et la moyenne des salaires par titre dont la
 moyenne est supérieure à la moyenne des salaires des Représentants. ;
 
-SELECT AVG(salaire) AS 'slr', titre 
-FROM employe 
-GROUP BY titre 
+
+
+Select AVG(salaire) AS 'slr', titre
+from employe
+group by titre
 HAVING slr > (
-                SELECT AVG(salaire) AS 'rprsent' 
-                FROM employe 
-                WHERE titre = 'rprsent');
+                Select AVG(salaire) AS 'slr'
+                from employe
+                WHERE titre = "représentant")
+
+;
 
 10.Rechercher le nombre de salaires renseignés et le nombre de taux de
-commission renseignés. 
+commission renseignés. ;
 
-SELECT COUNT(tauxcom) , COUNT(salaire)
+SELECT COUNT(tauxcom) AS 'taux com', COUNT(salaire) AS ' slr'
 FROM employe;
 
 Rechercher le numéro de département, le nom du département, le
@@ -317,7 +309,7 @@ FROM employe
 JOIN dept 
 ON employe.nodep = dept.nodept ;
 
-Rechercher le nom et le salaire des employés qui gagnent plus que
+Rechercher le nom et le salaire des employés qui gagnent plus que      
 leur patron, et le nom et le salaire de leur patron. ;
 
 
